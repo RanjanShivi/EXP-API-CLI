@@ -7,7 +7,7 @@ import * as UserService from '../services/user.service';
  * @param {object} res - response object
  * @param {Function} next
  */
-export const getAllUsers = async (req, res, next) => {
+ export const getAllUsers = async (req, res, next) => {
   try {
     const data = await UserService.getAllUsers();
     res.status(HttpStatus.OK).json({
@@ -21,31 +21,12 @@ export const getAllUsers = async (req, res, next) => {
 };
 
 /**
- * Controller to get a single user
- * @param  {object} req - request object
- * @param {object} res - response object
- * @param {Function} next
- */
-export const getUser = async (req, res, next) => {
-  try {
-    const data = await UserService.getUser(req.params._id);
-    res.status(HttpStatus.OK).json({
-      code: HttpStatus.OK,
-      data: data,
-      message: 'User fetched successfully'
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
-/**
  * Controller to create a new user
  * @param  {object} req - request object
  * @param {object} res - response object
  * @param {Function} next
  */
-export const userRegistration = async (req, res, next) => {
+ export const userRegistration = async (req, res, next) => {
   try {
     const data = await UserService.userRegistration(req.body);
     res.status(HttpStatus.CREATED).json({
@@ -55,6 +36,19 @@ export const userRegistration = async (req, res, next) => {
     });
   } catch (error) {
     next(error);
+  }
+};
+
+export const userLogin = async (req, res, next) => {
+  try {
+    const data = await UserService.userLogin(req.body);
+    res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
+      data: data,
+      message: 'Login Successful'
+    });
+  }catch (error) {
+    next(error)
   }
 };
 

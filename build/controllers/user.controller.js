@@ -7,7 +7,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.userRegistration = exports.updateUser = exports.getUser = exports.getAllUsers = exports.deleteUser = void 0;
+exports.userRegistration = exports.userLogin = exports.updateUser = exports.getAllUsers = exports.deleteUser = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -66,7 +66,7 @@ var getAllUsers = /*#__PURE__*/function () {
   };
 }();
 /**
- * Controller to get a single user
+ * Controller to create a new user
  * @param  {object} req - request object
  * @param {object} res - response object
  * @param {Function} next
@@ -75,7 +75,7 @@ var getAllUsers = /*#__PURE__*/function () {
 
 exports.getAllUsers = getAllUsers;
 
-var getUser = /*#__PURE__*/function () {
+var userRegistration = /*#__PURE__*/function () {
   var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(req, res, next) {
     var data;
     return _regenerator["default"].wrap(function _callee2$(_context2) {
@@ -84,14 +84,14 @@ var getUser = /*#__PURE__*/function () {
           case 0:
             _context2.prev = 0;
             _context2.next = 3;
-            return UserService.getUser(req.params._id);
+            return UserService.userRegistration(req.body);
 
           case 3:
             data = _context2.sent;
-            res.status(_httpStatusCodes["default"].OK).json({
-              code: _httpStatusCodes["default"].OK,
+            res.status(_httpStatusCodes["default"].CREATED).json({
+              code: _httpStatusCodes["default"].CREATED,
               data: data,
-              message: 'User fetched successfully'
+              message: 'User created successfully'
             });
             _context2.next = 10;
             break;
@@ -109,21 +109,14 @@ var getUser = /*#__PURE__*/function () {
     }, _callee2, null, [[0, 7]]);
   }));
 
-  return function getUser(_x4, _x5, _x6) {
+  return function userRegistration(_x4, _x5, _x6) {
     return _ref2.apply(this, arguments);
   };
 }();
-/**
- * Controller to create a new user
- * @param  {object} req - request object
- * @param {object} res - response object
- * @param {Function} next
- */
 
+exports.userRegistration = userRegistration;
 
-exports.getUser = getUser;
-
-var userRegistration = /*#__PURE__*/function () {
+var userLogin = /*#__PURE__*/function () {
   var _ref3 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(req, res, next) {
     var data;
     return _regenerator["default"].wrap(function _callee3$(_context3) {
@@ -132,14 +125,14 @@ var userRegistration = /*#__PURE__*/function () {
           case 0:
             _context3.prev = 0;
             _context3.next = 3;
-            return UserService.userRegistration(req.body);
+            return UserService.userLogin(req.body);
 
           case 3:
             data = _context3.sent;
-            res.status(_httpStatusCodes["default"].CREATED).json({
-              code: _httpStatusCodes["default"].CREATED,
+            res.status(_httpStatusCodes["default"].OK).json({
+              code: _httpStatusCodes["default"].OK,
               data: data,
-              message: 'User created successfully'
+              message: 'Login Successful'
             });
             _context3.next = 10;
             break;
@@ -157,7 +150,7 @@ var userRegistration = /*#__PURE__*/function () {
     }, _callee3, null, [[0, 7]]);
   }));
 
-  return function userRegistration(_x7, _x8, _x9) {
+  return function userLogin(_x7, _x8, _x9) {
     return _ref3.apply(this, arguments);
   };
 }();
@@ -169,7 +162,7 @@ var userRegistration = /*#__PURE__*/function () {
  */
 
 
-exports.userRegistration = userRegistration;
+exports.userLogin = userLogin;
 
 var updateUser = /*#__PURE__*/function () {
   var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(req, res, next) {

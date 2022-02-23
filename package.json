@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/index.js",
+    "dev": "nodemon src/index.js --exec babel-node",
     "build": "rimraf build && babel src --out-dir build",
     "prestart": "rimraf build && babel src --out-dir build",
     "start": "node build/index.js",
@@ -32,8 +32,8 @@
     "winston-daily-rotate-file": "^4.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.4",
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.5",
     "@babel/node": "^7.10.5",
     "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.11.0",
