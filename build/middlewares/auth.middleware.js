@@ -25,8 +25,7 @@ var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
  */
 var userAuth = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res, next) {
-    var bearerToken, _yield$jwt$verify, user;
-
+    var bearerToken;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -45,30 +44,41 @@ var userAuth = /*#__PURE__*/function () {
             };
 
           case 4:
+            console.log("bearerToken before spliting----->", bearerToken);
             bearerToken = bearerToken.split(' ')[1];
-            _context.next = 7;
-            return _jsonwebtoken["default"].verify(bearerToken, 'your-secret-key');
+            console.log("bearerToken before spliting----->", bearerToken); //const { user } = await jwt.verify(bearerToken, 'your-secret-key');
+            //res.locals.user = user;
+            //res.locals.token = bearerToken;
+            //next();
 
-          case 7:
-            _yield$jwt$verify = _context.sent;
-            user = _yield$jwt$verify.user;
-            res.locals.user = user;
-            res.locals.token = bearerToken;
-            next();
-            _context.next = 17;
+            _jsonwebtoken["default"].verify(bearerToken, process.env.SECRET_KEY, function (err, verifiedToken) {
+              if (err) {
+                throw {
+                  code: _httpStatusCodes["default"].BAD_REQUEST,
+                  message: 'Authorization token is incorect'
+                };
+              } else {
+                console.log("body before token----->", req.body);
+                req.body['data'] = verifiedToken;
+                console.log("body after token----->", req.body);
+                next();
+              }
+            });
+
+            _context.next = 13;
             break;
 
-          case 14:
-            _context.prev = 14;
+          case 10:
+            _context.prev = 10;
             _context.t0 = _context["catch"](0);
             next(_context.t0);
 
-          case 17:
+          case 13:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 14]]);
+    }, _callee, null, [[0, 10]]);
   }));
 
   return function userAuth(_x, _x2, _x3) {

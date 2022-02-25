@@ -7,11 +7,11 @@ const noteSchema = new Schema(
         Color: { type: String },
         isArchived: { type: Boolean },
         isDeleted: { type: Boolean },
-        userID: { type: String, required: true, unique: true },
+        userID: { type: String },
     },
     {
         timestamps: true
     }
-);
+  );
      
     export default model('Note', noteSchema);

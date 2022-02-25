@@ -1,22 +1,26 @@
 import express from 'express';
 import * as noteController from '../controllers/note.controller';
-import { newNoteValidator } from '../validators/note.validator';
+import { newNoteValidator } from '../validators/validator';
+import { userAuth } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 
 // Create a new Note
-router.post('/createnote', newNoteValidator, noteController.create);
+router.post('', newNoteValidator, userAuth, noteController.create);
 
 // Retrieve all Notes
-router.get('/getnote', noteController.getAllNotes);
+//router.get('', userAuth, noteController.getAllNotes);
 
 // Retrieve a single Note with noteId
-router.get('/:_id', noteController.getSingleNote);
+//router.get('/:userID', userAuth, noteController.getSingleNote);
 
 // Update a Note with noteId
-router.put('/updatenotes/:noteId', noteController.updateNote);
+//router.put('/:_id', noteController.updateNote);
+
+//isArchieve
+//router.put('/:_id', noteController.updateNote);
 
 // Delete a Note with noteId
-router.delete('/deletenotes/:noteId', noteController.deleteNote);
+//router.delete('/:_id', noteController.deleteNote);
 
 export default router;

@@ -26,9 +26,7 @@ var noteSchema = new _mongoose.Schema({
     type: Boolean
   },
   userID: {
-    type: String,
-    required: true,
-    unique: true
+    type: String
   }
 }, {
   timestamps: true

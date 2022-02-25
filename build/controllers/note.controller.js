@@ -30,30 +30,31 @@ var create = /*#__PURE__*/function () {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            _context.next = 3;
+            req.body.userID = req.body.data.id;
+            _context.next = 4;
             return NoteService.create(req.body);
 
-          case 3:
+          case 4:
             data = _context.sent;
             res.status(_httpStatusCodes["default"].CREATED).json({
               code: _httpStatusCodes["default"].CREATED,
               data: data,
               message: 'Note created successfully'
             });
-            _context.next = 10;
+            _context.next = 11;
             break;
 
-          case 7:
-            _context.prev = 7;
+          case 8:
+            _context.prev = 8;
             _context.t0 = _context["catch"](0);
             next(_context.t0);
 
-          case 10:
+          case 11:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 7]]);
+    }, _callee, null, [[0, 8]]);
   }));
 
   return function create(_x, _x2, _x3) {
@@ -115,7 +116,7 @@ var getSingleNote = /*#__PURE__*/function () {
           case 0:
             _context3.prev = 0;
             _context3.next = 3;
-            return NoteService.getSingleNote(req.params._id);
+            return NoteService.getSingleNote(req.body.userID);
 
           case 3:
             data = _context3.sent;
@@ -157,7 +158,7 @@ var updateNote = /*#__PURE__*/function () {
           case 0:
             _context4.prev = 0;
             _context4.next = 3;
-            return NoteService.updateNote(req.params._id, req.body);
+            return NoteService.updateNote(req.body.userID, req.body);
 
           case 3:
             data = _context4.sent;
@@ -197,7 +198,7 @@ var deleteNote = /*#__PURE__*/function () {
           case 0:
             _context5.prev = 0;
             _context5.next = 3;
-            return NoteService.deleteNote(req.params._id);
+            return NoteService.deleteNote(req.body.userID);
 
           case 3:
             res.status(_httpStatusCodes["default"].OK).json({

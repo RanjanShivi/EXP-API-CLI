@@ -11,7 +11,7 @@ export const getAllUsers = async () => {
 
 //create new user
 export const userRegistration = async (body) => {
-  console.log("request:", req);
+  //console.log("request:", req);
   const user = await User.findOne({ email: body.email })
   if (user == null) {
     const salt = await bcrypt.genSalt(10);

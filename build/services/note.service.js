@@ -16,35 +16,19 @@ var _note = _interopRequireDefault(require("../models/note.model"));
 //create new note
 var create = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(body) {
-    var note, data;
+    var data;
     return _regenerator["default"].wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return _note["default"].findOne({
-              userID: body.userID
-            });
-
-          case 2:
-            note = _context.sent;
-
-            if (!(note == null)) {
-              _context.next = 10;
-              break;
-            }
-
-            _context.next = 6;
             return _note["default"].create(body);
 
-          case 6:
+          case 2:
             data = _context.sent;
             return _context.abrupt("return", data);
 
-          case 10:
-            throw new Error("Note Already Exists");
-
-          case 11:
+          case 4:
           case "end":
             return _context.stop();
         }
@@ -131,7 +115,9 @@ var updateNote = /*#__PURE__*/function () {
             return _note["default"].findByIdAndUpdate({
               _id: _id
             }, body, {
-              "new": true
+              $set: {
+                isArcheive: true
+              }
             });
 
           case 2:
@@ -161,7 +147,7 @@ var deleteNote = /*#__PURE__*/function () {
         switch (_context5.prev = _context5.next) {
           case 0:
             _context5.next = 2;
-            return User.findByIdAndDelete(id);
+            return _note["default"].findByIdAndDelete(id);
 
           case 2:
             return _context5.abrupt("return", '');

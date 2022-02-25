@@ -61,41 +61,40 @@ var userRegistration = /*#__PURE__*/function () {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            console.log("request:", req);
-            _context2.next = 3;
+            _context2.next = 2;
             return _user["default"].findOne({
               email: body.email
             });
 
-          case 3:
+          case 2:
             user = _context2.sent;
 
             if (!(user == null)) {
-              _context2.next = 17;
+              _context2.next = 16;
               break;
             }
 
-            _context2.next = 7;
+            _context2.next = 6;
             return _bcrypt["default"].genSalt(10);
 
-          case 7:
+          case 6:
             salt = _context2.sent;
-            _context2.next = 10;
+            _context2.next = 9;
             return _bcrypt["default"].hash(body.password, salt);
 
-          case 10:
+          case 9:
             body.password = _context2.sent;
-            _context2.next = 13;
+            _context2.next = 12;
             return _user["default"].create(body);
 
-          case 13:
+          case 12:
             data = _context2.sent;
             return _context2.abrupt("return", data);
 
-          case 17:
+          case 16:
             throw new Error("User Already Exists");
 
-          case 18:
+          case 17:
           case "end":
             return _context2.stop();
         }

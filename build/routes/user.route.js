@@ -13,7 +13,7 @@ var _express = _interopRequireDefault(require("express"));
 
 var userController = _interopRequireWildcard(require("../controllers/user.controller"));
 
-var _user2 = require("../validators/user.validator");
+var _validator = require("../validators/validator");
 
 var _auth = require("../middlewares/auth.middleware");
 
@@ -26,7 +26,7 @@ var router = _express["default"].Router(); //route to get all users
 //route to create a new user
 
 
-router.post('/userregister', _user2.newUserValidator, userController.userRegistration); //route to login registered users
+router.post('/userregister', _validator.newUserValidator, userController.userRegistration); //route to login registered users
 
 router.get('/login', userController.userLogin); //route to get a single user by their user id
 //router.get('/:_id', userAuth, userController.getUser);

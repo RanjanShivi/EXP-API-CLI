@@ -13,7 +13,9 @@ var _express = _interopRequireDefault(require("express"));
 
 var noteController = _interopRequireWildcard(require("../controllers/note.controller"));
 
-var _note2 = require("../validators/note.validator");
+var _validator = require("../validators/validator");
+
+var _auth = require("../middlewares/auth.middleware");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -22,14 +24,16 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 var router = _express["default"].Router(); // Create a new Note
 
 
-router.post('/createnote', _note2.newNoteValidator, noteController.create); // Retrieve all Notes
+router.post('', _validator.newNoteValidator, _auth.userAuth, noteController.create); // Retrieve all Notes
 
-router.get('/getnote', noteController.getAllNotes); // Retrieve a single Note with noteId
+router.get('', _auth.userAuth, noteController.getAllNotes); // Retrieve a single Note with noteId
 
-router.get('/:_id', noteController.getSingleNote); // Update a Note with noteId
+router.get('/:_id', _auth.userAuth, noteController.getSingleNote); // Update a Note with noteId
+//router.put('/:_id', noteController.updateNote);
+//isArchieve
+//router.put('/:_id', noteController.updateNote);
+// Delete a Note with noteId
 
-router.put('/updatenotes/:noteId', noteController.updateNote); // Delete a Note with noteId
-
-router["delete"]('/deletenotes/:noteId', noteController.deleteNote);
+router["delete"]('/:_id', noteController.deleteNote);
 var _default = router;
 exports["default"] = _default;

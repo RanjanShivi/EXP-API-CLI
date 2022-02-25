@@ -23,8 +23,8 @@ var router = _express["default"].Router();
 var routes = function routes() {
   router.get('/', function (req, res) {
     res.json('Welcome');
-  }); //router.use('/users', userRoute);
-
+  });
+  router.use('/users', _user["default"]);
   router.use('/note', _note["default"]);
   return router;
 };
