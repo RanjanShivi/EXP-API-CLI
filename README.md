@@ -1,2 +1,1 @@
-**Express API**
-# EXP-API-CLI
+Welcome to FundooNotes Project
