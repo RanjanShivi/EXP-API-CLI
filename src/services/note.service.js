@@ -12,14 +12,16 @@ export const getAllNotes = async (userID) => {
     return data;
   };
 
-//get single note
+//get single notes
 export const getNotebyId = async (noteID, userID) => {
-    const data = await Note.findById({noteID}, {userID});
+  console.log(noteID);
+  console.log(userID);
+    const data = await Note.findById({_id: noteID, userID: userID});
     console.log(data);
     return data;
   };
   
-//update note
+//update notes
 export const updateNote = async (userID, body) => {
     const data = await Note.findByIdAndUpdate(
       {
