@@ -32,10 +32,10 @@ export const getAllNotes = async (req, res, next) => {
   };
 
 //retrieve single note by id
-export const getSingleNote = async (req, res, next) => {
+export const getNotebyId = async (req, res, next) => {
     try {
       req.body.userID = req.body.data.id;
-      const data = await NoteService.getSingleNote(req.params._id, req.body.userID);
+      const data = await NoteService.getNotebyId(req.params._id, req.body.userID);
       res.status(HttpStatus.ACCEPTED).json({
       code: HttpStatus.ACCEPTED,
       data: data,
@@ -49,6 +49,7 @@ export const getSingleNote = async (req, res, next) => {
   //update note
   export const updateNote = async (req, res, next) => {
     try {
+      req.body.userID = req.body.data.id;
       const data = await NoteService.updateNote(req.params._id, req.body.userID, req.body);
       res.status(HttpStatus.ACCEPTED).json({
         code: HttpStatus.ACCEPTED,

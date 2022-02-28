@@ -13,7 +13,7 @@ export const getAllNotes = async (userID) => {
   };
 
 //get single note
-export const getSingleNote = async (noteID, userID) => {
+export const getNotebyId = async (noteID, userID) => {
     const data = await Note.findById({noteID}, {userID});
     console.log(data);
     return data;
