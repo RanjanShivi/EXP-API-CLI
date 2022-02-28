@@ -5,7 +5,7 @@ import * as NoteService from '../services/note.service';
 export const create = async (req, res, next) => {
     try {
       req.body.userID = req.body.data.id;
-      const data = await NoteService.create(req.body);
+      const data = await NoteService.createNote(req.body);
       res.status(HttpStatus.CREATED).json({
         code: HttpStatus.CREATED,
         data: data,
@@ -19,7 +19,8 @@ export const create = async (req, res, next) => {
 //retrieve all notes
 export const getAllNotes = async (req, res, next) => {
     try {
-        const data = await NoteService.getAllNotes();
+        req.body.userID = req.body.data.id;
+        const data = await NoteService.getAllNotes(req.body.userID);
         res.status(HttpStatus.OK).json({
         code: HttpStatus.OK,
         data: data,
@@ -33,11 +34,12 @@ export const getAllNotes = async (req, res, next) => {
 //retrieve single note by id
 export const getSingleNote = async (req, res, next) => {
     try {
-        const data = await NoteService.getSingleNote(req.body.userID);
-        res.status(HttpStatus.ACCEPTED).json({
-        code: HttpStatus.ACCEPTED,
-        data: data,
-        message: 'Note fetched successfully'
+      req.body.userID = req.body.data.id;
+      const data = await NoteService.getSingleNote(req.params._id, req.body.userID);
+      res.status(HttpStatus.ACCEPTED).json({
+      code: HttpStatus.ACCEPTED,
+      data: data,
+      message: 'Note fetched successfully'
       });
     } catch (error) {
         next(error);
@@ -47,7 +49,7 @@ export const getSingleNote = async (req, res, next) => {
   //update note
   export const updateNote = async (req, res, next) => {
     try {
-      const data = await NoteService.updateNote(req.body.userID, req.body);
+      const data = await NoteService.updateNote(req.params._id, req.body.userID, req.body);
       res.status(HttpStatus.ACCEPTED).json({
         code: HttpStatus.ACCEPTED,
         data: data,
@@ -60,7 +62,7 @@ export const getSingleNote = async (req, res, next) => {
 
   export const archieveNote = async (req, res, next) => {
     try {
-      const data = await NoteService.archieveNote(req.body.userID, req.body);
+      const data = await NoteService.archieveNote(req.params._id, req.body.userID);
       res.status(HttpStatus.ACCEPTED).json({
         code: HttpStatus.ACCEPTED,
         data: data,
@@ -73,11 +75,24 @@ export const getSingleNote = async (req, res, next) => {
 
   export const deleteNote = async (req, res, next) => {
     try {
-      await NoteService.deleteNote(req.body.userID);
+      const data = await NoteService.deleteNote(req.params._id, req.body.userID);
+      res.status(HttpStatus.ACCEPTED).json({
+        code: HttpStatus.ACCEPTED,
+        data: data,
+        message: 'Note deleted successfully'
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  export const trashNote = async (req, res, next) => {
+    try {
+      await NoteService.trashNote(req.params._id);
       res.status(HttpStatus.OK).json({
         code: HttpStatus.OK,
         data: [],
-        message: 'Note deleted successfully'
+        message: 'Note trash successfully'
       });
     } catch (error) {
       next(error);

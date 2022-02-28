@@ -7,7 +7,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateNote = exports.getSingleNote = exports.getAllNotes = exports.deleteNote = exports.create = void 0;
+exports.updateNote = exports.trashNote = exports.getSingleNote = exports.getAllNotes = exports.deleteNote = exports.create = exports.archieveNote = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -32,7 +32,7 @@ var create = /*#__PURE__*/function () {
             _context.prev = 0;
             req.body.userID = req.body.data.id;
             _context.next = 4;
-            return NoteService.create(req.body);
+            return NoteService.createNote(req.body);
 
           case 4:
             data = _context.sent;
@@ -116,7 +116,7 @@ var getSingleNote = /*#__PURE__*/function () {
           case 0:
             _context3.prev = 0;
             _context3.next = 3;
-            return NoteService.getSingleNote(req.body.userID);
+            return NoteService.getSingleNote(_id, req.body.userID);
 
           case 3:
             data = _context3.sent;
@@ -190,41 +190,123 @@ var updateNote = /*#__PURE__*/function () {
 
 exports.updateNote = updateNote;
 
-var deleteNote = /*#__PURE__*/function () {
+var archieveNote = /*#__PURE__*/function () {
   var _ref5 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee5(req, res, next) {
+    var data;
     return _regenerator["default"].wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
             _context5.prev = 0;
             _context5.next = 3;
-            return NoteService.deleteNote(req.body.userID);
+            return NoteService.archieveNote(_id, req.body.userID);
+
+          case 3:
+            data = _context5.sent;
+            res.status(_httpStatusCodes["default"].ACCEPTED).json({
+              code: _httpStatusCodes["default"].ACCEPTED,
+              data: data,
+              message: 'Note archieved successfully'
+            });
+            _context5.next = 10;
+            break;
+
+          case 7:
+            _context5.prev = 7;
+            _context5.t0 = _context5["catch"](0);
+            next(_context5.t0);
+
+          case 10:
+          case "end":
+            return _context5.stop();
+        }
+      }
+    }, _callee5, null, [[0, 7]]);
+  }));
+
+  return function archieveNote(_x13, _x14, _x15) {
+    return _ref5.apply(this, arguments);
+  };
+}();
+
+exports.archieveNote = archieveNote;
+
+var deleteNote = /*#__PURE__*/function () {
+  var _ref6 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee6(req, res, next) {
+    var data;
+    return _regenerator["default"].wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            _context6.prev = 0;
+            _context6.next = 3;
+            return NoteService.deleteNote(_id, req.body.userID);
+
+          case 3:
+            data = _context6.sent;
+            res.status(_httpStatusCodes["default"].ACCEPTED).json({
+              code: _httpStatusCodes["default"].ACCEPTED,
+              data: data,
+              message: 'Note deleted successfully'
+            });
+            _context6.next = 10;
+            break;
+
+          case 7:
+            _context6.prev = 7;
+            _context6.t0 = _context6["catch"](0);
+            next(_context6.t0);
+
+          case 10:
+          case "end":
+            return _context6.stop();
+        }
+      }
+    }, _callee6, null, [[0, 7]]);
+  }));
+
+  return function deleteNote(_x16, _x17, _x18) {
+    return _ref6.apply(this, arguments);
+  };
+}();
+
+exports.deleteNote = deleteNote;
+
+var trashNote = /*#__PURE__*/function () {
+  var _ref7 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee7(req, res, next) {
+    return _regenerator["default"].wrap(function _callee7$(_context7) {
+      while (1) {
+        switch (_context7.prev = _context7.next) {
+          case 0:
+            _context7.prev = 0;
+            _context7.next = 3;
+            return NoteService.trashNote(_id);
 
           case 3:
             res.status(_httpStatusCodes["default"].OK).json({
               code: _httpStatusCodes["default"].OK,
               data: [],
-              message: 'Note deleted successfully'
+              message: 'Note trash successfully'
             });
-            _context5.next = 9;
+            _context7.next = 9;
             break;
 
           case 6:
-            _context5.prev = 6;
-            _context5.t0 = _context5["catch"](0);
-            next(_context5.t0);
+            _context7.prev = 6;
+            _context7.t0 = _context7["catch"](0);
+            next(_context7.t0);
 
           case 9:
           case "end":
-            return _context5.stop();
+            return _context7.stop();
         }
       }
-    }, _callee5, null, [[0, 6]]);
+    }, _callee7, null, [[0, 6]]);
   }));
 
-  return function deleteNote(_x13, _x14, _x15) {
-    return _ref5.apply(this, arguments);
+  return function trashNote(_x19, _x20, _x21) {
+    return _ref7.apply(this, arguments);
   };
 }();
 
-exports.deleteNote = deleteNote;
+exports.trashNote = trashNote;

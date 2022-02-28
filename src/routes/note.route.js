@@ -9,18 +9,22 @@ const router = express.Router();
 router.post('', newNoteValidator, userAuth, noteController.create);
 
 // Retrieve all Notes
-//router.get('', userAuth, noteController.getAllNotes);
+router.get('', userAuth, noteController.getAllNotes);
 
 // Retrieve a single Note with noteId
-//router.get('/:userID', userAuth, noteController.getSingleNote);
+router.get('/:_id', userAuth, noteController.getSingleNote);
 
 // Update a Note with noteId
 //router.put('/:_id', noteController.updateNote);
 
 //isArchieve
-//router.put('/:_id', noteController.updateNote);
+//router.put('/archieve/:_id', noteController.updateNote);
 
-// Delete a Note with noteId
+//isdelete
+//router.put('/delete/:_id', noteController.updateNote);
+
+
+// Trash a Note with noteId
 //router.delete('/:_id', noteController.deleteNote);
 
 export default router;

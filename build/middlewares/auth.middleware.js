@@ -44,12 +44,7 @@ var userAuth = /*#__PURE__*/function () {
             };
 
           case 4:
-            console.log("bearerToken before spliting----->", bearerToken);
             bearerToken = bearerToken.split(' ')[1];
-            console.log("bearerToken before spliting----->", bearerToken); //const { user } = await jwt.verify(bearerToken, 'your-secret-key');
-            //res.locals.user = user;
-            //res.locals.token = bearerToken;
-            //next();
 
             _jsonwebtoken["default"].verify(bearerToken, process.env.SECRET_KEY, function (err, verifiedToken) {
               if (err) {
@@ -58,27 +53,25 @@ var userAuth = /*#__PURE__*/function () {
                   message: 'Authorization token is incorect'
                 };
               } else {
-                console.log("body before token----->", req.body);
                 req.body['data'] = verifiedToken;
-                console.log("body after token----->", req.body);
                 next();
               }
             });
 
-            _context.next = 13;
+            _context.next = 11;
             break;
 
-          case 10:
-            _context.prev = 10;
+          case 8:
+            _context.prev = 8;
             _context.t0 = _context["catch"](0);
             next(_context.t0);
 
-          case 13:
+          case 11:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 10]]);
+    }, _callee, null, [[0, 8]]);
   }));
 
   return function userAuth(_x, _x2, _x3) {

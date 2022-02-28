@@ -28,12 +28,14 @@ router.post('', _validator.newNoteValidator, _auth.userAuth, noteController.crea
 
 router.get('', _auth.userAuth, noteController.getAllNotes); // Retrieve a single Note with noteId
 
-router.get('/:_id', _auth.userAuth, noteController.getSingleNote); // Update a Note with noteId
+router.get('/:userID', _auth.userAuth, noteController.getSingleNote); // Update a Note with noteId
 //router.put('/:_id', noteController.updateNote);
 //isArchieve
 //router.put('/:_id', noteController.updateNote);
-// Delete a Note with noteId
+//isdelete
+//router.put('/:_id', noteController.updateNote);
+// Trash a Note with noteId
+//router.delete('/:_id', noteController.deleteNote);
 
-router["delete"]('/:_id', noteController.deleteNote);
 var _default = router;
 exports["default"] = _default;
