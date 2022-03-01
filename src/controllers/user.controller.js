@@ -20,12 +20,6 @@ import * as UserService from '../services/user.service';
   }
 };
 
-/**
- * Controller to create a new user
- * @param  {object} req - request object
- * @param {object} res - response object
- * @param {Function} next
- */
  export const userRegistration = async (req, res, next) => {
   try {
     const data = await UserService.userRegistration(req.body);
@@ -52,6 +46,17 @@ export const userLogin = async (req, res, next) => {
   }
 };
 
-
+export const forgetPassword = async (req, res, next) => {
+  try {    
+      const data = await UserService.forgetPassword(req.body);
+      res.status(HttpStatus.OK).json({
+      code: HttpStatus.OK,
+      data: data,
+      message: 'Reset Password Link Sent'
+    });
+  }catch (error) {
+    next(error)
+  }
+};
 
 
