@@ -20,7 +20,7 @@ export const userAuth = async (req, res, next) => {
     
     bearerToken = bearerToken.split(' ')[1];
     
-    jwt.verify(bearerToken, process.env.SECRET_KEY, (err, verifiedToken) =>{
+    jwt.verify(bearerToken, process.env.SECRET_KEY1, (err, verifiedToken) =>{
       if(err){
         throw {
           code: HttpStatus.BAD_REQUEST,

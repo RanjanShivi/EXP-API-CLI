@@ -50,7 +50,11 @@ export const getNotebyId = async (req, res, next) => {
   export const updateNote = async (req, res, next) => {
     try {
       req.body.userID = req.body.data.id;
+<<<<<<< HEAD
       const data = await NoteService.updateNote(req.params._id, req.body.userID, req.body);
+=======
+      const data = await NoteService.updateNote(req.params._id, req.body);
+>>>>>>> API/RETRIEVE_NOTE
       res.status(HttpStatus.ACCEPTED).json({
         code: HttpStatus.ACCEPTED,
         data: data,
@@ -63,7 +67,8 @@ export const getNotebyId = async (req, res, next) => {
 
   export const archieveNote = async (req, res, next) => {
     try {
-      const data = await NoteService.archieveNote(req.params._id, req.body.userID);
+      req.body.userID = req.body.data.id;
+      const data = await NoteService.archieveNote(req.params._id);
       res.status(HttpStatus.ACCEPTED).json({
         code: HttpStatus.ACCEPTED,
         data: data,
@@ -76,7 +81,8 @@ export const getNotebyId = async (req, res, next) => {
 
   export const deleteNote = async (req, res, next) => {
     try {
-      const data = await NoteService.deleteNote(req.params._id, req.body.userID);
+      req.body.userID = req.body.data.id;
+      const data = await NoteService.deleteNote(req.params._id);
       res.status(HttpStatus.ACCEPTED).json({
         code: HttpStatus.ACCEPTED,
         data: data,
@@ -87,8 +93,9 @@ export const getNotebyId = async (req, res, next) => {
     }
   };
 
-  export const trashNote = async (req, res, next) => {
+  /* const trashNote = async (req, res, next) => {
     try {
+      req.body.userID = req.body.data.id;
       await NoteService.trashNote(req.params._id);
       res.status(HttpStatus.OK).json({
         code: HttpStatus.OK,
@@ -98,5 +105,5 @@ export const getNotebyId = async (req, res, next) => {
     } catch (error) {
       next(error);
     }
-  };
+  };*/
 

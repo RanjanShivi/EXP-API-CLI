@@ -14,14 +14,19 @@ export const getAllNotes = async (userID) => {
 
 //get single notes
 export const getNotebyId = async (noteID, userID) => {
+<<<<<<< HEAD
   console.log(noteID);
   console.log(userID);
+=======
+  
+>>>>>>> API/RETRIEVE_NOTE
     const data = await Note.findById({_id: noteID, userID: userID});
     console.log(data);
     return data;
   };
   
 //update notes
+<<<<<<< HEAD
 export const updateNote = async (userID, body) => {
     const data = await Note.findByIdAndUpdate(
       {
@@ -32,34 +37,43 @@ export const updateNote = async (userID, body) => {
         new: true
       }
     );
+=======
+export const updateNote = async (noteID, body) => {
+    const data = await Note.findByIdAndUpdate({_id:noteID, userID: body.userID}, body, {new: true});
+>>>>>>> API/RETRIEVE_NOTE
     return data;
   };
 
 //is archieve
-export const archieveNote = async (noteID, userID) => {
+export const archieveNote = async (_id) => {
   const data = await Note.findByIdAndUpdate(
-    { noteID },
-    { userID },
-    { $set: { isArchived: true } },
-    );
-  return data;
+  {
+    _id
+  },
+   {
+    $set: { isArchived: true }
+  }
+);
+return data;
 };
 
 //is delete
-export const deleteNote = async (noteID, userID) => {
+export const deleteNote = async (_id) => {
   const data = await Note.findByIdAndUpdate(
-    { noteID },
-    { userID },
-    { $set: { isDeleted: true } },
-    );
+    {
+      _id
+    },
+     {
+      $set: { isArchived: true }
+    }
+  );
   return data;
 };
 
-//delete note
+/*//delete note
 export const trashNote = async (id) => {
     await Note.findByIdAndDelete(id);
     return '';
-  };
+  };*/
 
-  // User.find({region: "NA",sector:"Some Sector"}
   
