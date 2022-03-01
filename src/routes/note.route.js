@@ -18,7 +18,7 @@ router.get('/:_id', userAuth, noteController.getNotebyId);
 router.put('/:_id', userAuth, noteController.updateNote);
 
 //isArchieve
-router.put('/archive/:_id', userAuth, noteController.updateNote);
+//router.put('/archive/:_id', userAuth, noteController.updateNote);
 
 //isdelete
 //router.put('/delete/:_id', noteController.updateNote);
