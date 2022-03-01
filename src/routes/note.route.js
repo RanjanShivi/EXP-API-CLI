@@ -12,13 +12,13 @@ router.post('', newNoteValidator, userAuth, noteController.create);
 router.get('', userAuth, noteController.getAllNotes);
 
 // Retrieve a single Note with noteId
-router.get('/:_id', userAuth, noteController.getSingleNote);
+router.get('/:_id', userAuth, noteController.getNotebyId);
 
 // Update a Note with noteId
-//router.put('/:_id', noteController.updateNote);
+router.put('/:_id', userAuth, noteController.updateNote);
 
 //isArchieve
-//router.put('/archieve/:_id', noteController.updateNote);
+router.put('/archive/:_id', userAuth, noteController.updateNote);
 
 //isdelete
 //router.put('/delete/:_id', noteController.updateNote);

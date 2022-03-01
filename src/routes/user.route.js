@@ -14,4 +14,5 @@ router.post('/userregister', newUserValidator, userController.userRegistration);
 //route to login registered users
 router.get('/login', userController.userLogin);
 
+
 export default router;

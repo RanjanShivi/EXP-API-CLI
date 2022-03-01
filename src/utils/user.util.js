@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 
 export const generatrToken = (searchData)=>{
-    let token = jwt.sign({"email": searchData.email, "id": searchData._id}, process.env.SECRET_KEY);
+    let token = jwt.sign({"email": searchData.email, "id": searchData._id}, process.env.SECRET_KEY1);
     return token;
 }
