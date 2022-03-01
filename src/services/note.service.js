@@ -52,10 +52,10 @@ export const deleteNote = async (_id) => {
   return data;
 };
 
-/*//delete note
+//delete note
 export const trashNote = async (id) => {
     await Note.findByIdAndDelete(id);
     return '';
-  };*/
+  };
 
   

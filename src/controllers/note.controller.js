@@ -89,7 +89,7 @@ export const getNotebyId = async (req, res, next) => {
     }
   };
 
-  /* const trashNote = async (req, res, next) => {
+  const trashNote = async (req, res, next) => {
     try {
       req.body.userID = req.body.data.id;
       await NoteService.trashNote(req.params._id);
@@ -101,5 +101,5 @@ export const getNotebyId = async (req, res, next) => {
     } catch (error) {
       next(error);
     }
-  };*/
+  };
 
