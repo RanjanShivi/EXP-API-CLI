@@ -50,11 +50,7 @@ export const getNotebyId = async (req, res, next) => {
   export const updateNote = async (req, res, next) => {
     try {
       req.body.userID = req.body.data.id;
-<<<<<<< HEAD
       const data = await NoteService.updateNote(req.params._id, req.body.userID, req.body);
-=======
-      const data = await NoteService.updateNote(req.params._id, req.body);
->>>>>>> API/RETRIEVE_NOTE
       res.status(HttpStatus.ACCEPTED).json({
         code: HttpStatus.ACCEPTED,
         data: data,
