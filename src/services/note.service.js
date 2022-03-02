@@ -28,13 +28,13 @@ export const updateNote = async (noteID, body) => {
 
 //is archieve
 export const archieveNote = async (_id) => {
-  const data = await Note.findByIdAndUpdate({_id}, {$set: { isArchived: true }} );
+  const data = await Note.findByIdAndUpdate({_id}, {$set: { isArchived: true }}, {new: true} );
 return data;
 };
 
 //trash Note
 export const trashNote = async (_id) => {
-  const data = await Note.findByIdAndUpdate({_id}, {$set: { isDeleted: true}} )
+  const data = await Note.findByIdAndUpdate({_id}, {$set: { isDeleted: true}}, {new: true} )
   return data;
 };
 

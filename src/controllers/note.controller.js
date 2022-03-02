@@ -89,7 +89,7 @@ export const getNotebyId = async (req, res, next) => {
     }
   };
 
-  const deleteNote = async (req, res, next) => {
+  export const deleteNote = async (req, res, next) => {
     try {
       req.body.userID = req.body.data.id;
       await NoteService.deleteNote(req.params._id);

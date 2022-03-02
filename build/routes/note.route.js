@@ -24,18 +24,18 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 var router = _express["default"].Router(); // Create a new Note
 
 
-router.post('', _validator.newNoteValidator, _auth.userAuth, noteController.create); // Retrieve all Notes
+router.post('', _validator.newNoteValidator, _auth.userAuthForNote, noteController.create); // Retrieve all Notes
 
-router.get('', _auth.userAuth, noteController.getAllNotes); // Retrieve a single Note with noteId
+router.get('', _auth.userAuthForNote, noteController.getAllNotes); // Retrieve a single Note with noteId
 
-router.get('/:userID', _auth.userAuth, noteController.getSingleNote); // Update a Note with noteId
-//router.put('/:_id', noteController.updateNote);
-//isArchieve
-//router.put('/:_id', noteController.updateNote);
-//isdelete
-//router.put('/:_id', noteController.updateNote);
-// Trash a Note with noteId
-//router.delete('/:_id', noteController.deleteNote);
+router.get('/:_id', _auth.userAuthForNote, noteController.getNotebyId); // Update a Note with noteId
 
+router.put('/:_id', _auth.userAuthForNote, noteController.updateNote); //isArchieve
+
+router.put('/archive/:_id', _auth.userAuthForNote, noteController.updateNote); //trash
+
+router.put('/trash/:_id', _auth.userAuthForNote, noteController.trashNote); // Delete a Note 
+
+router["delete"]('/:_id', _auth.userAuthForNote, noteController.deleteNote);
 var _default = router;
 exports["default"] = _default;

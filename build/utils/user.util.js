@@ -13,7 +13,7 @@ var generatrToken = function generatrToken(searchData) {
   var token = _jsonwebtoken["default"].sign({
     "email": searchData.email,
     "id": searchData._id
-  }, process.env.SECRET_KEY);
+  }, process.env.SECRET_KEY1);
 
   return token;
 };

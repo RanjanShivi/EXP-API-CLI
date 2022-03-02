@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateNote = exports.trashNote = exports.getSingleNote = exports.getAllNotes = exports.deleteNote = exports.createNote = exports.archieveNote = void 0;
+exports.updateNote = exports.trashNote = exports.getNotebyId = exports.getAllNotes = exports.deleteNote = exports.createNote = exports.archieveNote = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -45,14 +45,16 @@ var createNote = /*#__PURE__*/function () {
 exports.createNote = createNote;
 
 var getAllNotes = /*#__PURE__*/function () {
-  var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2() {
+  var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(userID) {
     var data;
     return _regenerator["default"].wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.next = 2;
-            return _note["default"].find();
+            return _note["default"].find({
+              userID: userID
+            });
 
           case 2:
             data = _context2.sent;
@@ -66,15 +68,15 @@ var getAllNotes = /*#__PURE__*/function () {
     }, _callee2);
   }));
 
-  return function getAllNotes() {
+  return function getAllNotes(_x2) {
     return _ref2.apply(this, arguments);
   };
-}(); //get single note
+}(); //get single notes
 
 
 exports.getAllNotes = getAllNotes;
 
-var getSingleNote = /*#__PURE__*/function () {
+var getNotebyId = /*#__PURE__*/function () {
   var _ref3 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(noteID, userID) {
     var data;
     return _regenerator["default"].wrap(function _callee3$(_context3) {
@@ -83,8 +85,7 @@ var getSingleNote = /*#__PURE__*/function () {
           case 0:
             _context3.next = 2;
             return _note["default"].findById({
-              noteID: noteID
-            }, {
+              _id: noteID,
               userID: userID
             });
 
@@ -101,16 +102,16 @@ var getSingleNote = /*#__PURE__*/function () {
     }, _callee3);
   }));
 
-  return function getSingleNote(_x2, _x3) {
+  return function getNotebyId(_x3, _x4) {
     return _ref3.apply(this, arguments);
   };
-}(); //update note
+}(); //update notes
 
 
-exports.getSingleNote = getSingleNote;
+exports.getNotebyId = getNotebyId;
 
 var updateNote = /*#__PURE__*/function () {
-  var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(userID, body) {
+  var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(noteID, body) {
     var data;
     return _regenerator["default"].wrap(function _callee4$(_context4) {
       while (1) {
@@ -118,7 +119,8 @@ var updateNote = /*#__PURE__*/function () {
           case 0:
             _context4.next = 2;
             return _note["default"].findByIdAndUpdate({
-              userID: userID
+              _id: noteID,
+              userID: body.userID
             }, body, {
               "new": true
             });
@@ -135,7 +137,7 @@ var updateNote = /*#__PURE__*/function () {
     }, _callee4);
   }));
 
-  return function updateNote(_x4, _x5) {
+  return function updateNote(_x5, _x6) {
     return _ref4.apply(this, arguments);
   };
 }(); //is archieve
@@ -144,7 +146,7 @@ var updateNote = /*#__PURE__*/function () {
 exports.updateNote = updateNote;
 
 var archieveNote = /*#__PURE__*/function () {
-  var _ref5 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee5(noteID, userID) {
+  var _ref5 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee5(_id) {
     var data;
     return _regenerator["default"].wrap(function _callee5$(_context5) {
       while (1) {
@@ -152,13 +154,13 @@ var archieveNote = /*#__PURE__*/function () {
           case 0:
             _context5.next = 2;
             return _note["default"].findByIdAndUpdate({
-              noteID: noteID
-            }, {
-              userID: userID
+              _id: _id
             }, {
               $set: {
                 isArchived: true
               }
+            }, {
+              "new": true
             });
 
           case 2:
@@ -173,16 +175,16 @@ var archieveNote = /*#__PURE__*/function () {
     }, _callee5);
   }));
 
-  return function archieveNote(_x6, _x7) {
+  return function archieveNote(_x7) {
     return _ref5.apply(this, arguments);
   };
-}(); //is delete
+}(); //trash Note
 
 
 exports.archieveNote = archieveNote;
 
-var deleteNote = /*#__PURE__*/function () {
-  var _ref6 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee6(noteID, userID) {
+var trashNote = /*#__PURE__*/function () {
+  var _ref6 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee6(_id) {
     var data;
     return _regenerator["default"].wrap(function _callee6$(_context6) {
       while (1) {
@@ -190,13 +192,13 @@ var deleteNote = /*#__PURE__*/function () {
           case 0:
             _context6.next = 2;
             return _note["default"].findByIdAndUpdate({
-              noteID: noteID
-            }, {
-              userID: userID
+              _id: _id
             }, {
               $set: {
                 isDeleted: true
               }
+            }, {
+              "new": true
             });
 
           case 2:
@@ -211,15 +213,15 @@ var deleteNote = /*#__PURE__*/function () {
     }, _callee6);
   }));
 
-  return function deleteNote(_x8, _x9) {
+  return function trashNote(_x8) {
     return _ref6.apply(this, arguments);
   };
 }(); //delete note
 
 
-exports.deleteNote = deleteNote;
+exports.trashNote = trashNote;
 
-var trashNote = /*#__PURE__*/function () {
+var deleteNote = /*#__PURE__*/function () {
   var _ref7 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee7(id) {
     return _regenerator["default"].wrap(function _callee7$(_context7) {
       while (1) {
@@ -239,10 +241,9 @@ var trashNote = /*#__PURE__*/function () {
     }, _callee7);
   }));
 
-  return function trashNote(_x10) {
+  return function deleteNote(_x9) {
     return _ref7.apply(this, arguments);
   };
-}(); // User.find({region: "NA",sector:"Some Sector"}
+}();
 
-
-exports.trashNote = trashNote;
+exports.deleteNote = deleteNote;

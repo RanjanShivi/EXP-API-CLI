@@ -5,7 +5,7 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.userAuth = void 0;
+exports.userAuthForPassword = exports.userAuthForNote = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -23,7 +23,7 @@ var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
  * @param {Object} res
  * @param {Function} next
  */
-var userAuth = /*#__PURE__*/function () {
+var userAuthForNote = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res, next) {
     var bearerToken;
     return _regenerator["default"].wrap(function _callee$(_context) {
@@ -46,7 +46,7 @@ var userAuth = /*#__PURE__*/function () {
           case 4:
             bearerToken = bearerToken.split(' ')[1];
 
-            _jsonwebtoken["default"].verify(bearerToken, process.env.SECRET_KEY, function (err, verifiedToken) {
+            _jsonwebtoken["default"].verify(bearerToken, process.env.SECRET_KEY1, function (err, verifiedToken) {
               if (err) {
                 throw {
                   code: _httpStatusCodes["default"].BAD_REQUEST,
@@ -74,9 +74,67 @@ var userAuth = /*#__PURE__*/function () {
     }, _callee, null, [[0, 8]]);
   }));
 
-  return function userAuth(_x, _x2, _x3) {
+  return function userAuthForNote(_x, _x2, _x3) {
     return _ref.apply(this, arguments);
   };
 }();
 
-exports.userAuth = userAuth;
+exports.userAuthForNote = userAuthForNote;
+
+var userAuthForPassword = /*#__PURE__*/function () {
+  var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(req, res, next) {
+    var bearerToken;
+    return _regenerator["default"].wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            bearerToken = req.header('Authorization');
+
+            if (bearerToken) {
+              _context2.next = 4;
+              break;
+            }
+
+            throw {
+              code: _httpStatusCodes["default"].BAD_REQUEST,
+              message: 'Authorization token is required'
+            };
+
+          case 4:
+            bearerToken = bearerToken.split(' ')[1];
+
+            _jsonwebtoken["default"].verify(bearerToken, process.env.SECRET_KEY2, function (err, verifiedToken) {
+              if (err) {
+                throw {
+                  code: _httpStatusCodes["default"].BAD_REQUEST,
+                  message: 'Authorization token is incorect'
+                };
+              } else {
+                req.body['data'] = verifiedToken;
+                next();
+              }
+            });
+
+            _context2.next = 11;
+            break;
+
+          case 8:
+            _context2.prev = 8;
+            _context2.t0 = _context2["catch"](0);
+            next(_context2.t0);
+
+          case 11:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, null, [[0, 8]]);
+  }));
+
+  return function userAuthForPassword(_x4, _x5, _x6) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+
+exports.userAuthForPassword = userAuthForPassword;

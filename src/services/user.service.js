@@ -53,7 +53,8 @@ export const forgetPassword = async (body) => {
 
 export const resetPassword = async (body) => {
   console.log(body);
-  const data = await User.findByIdAndUpdate({_id: body.userID }, {$set: {password: body.password}}, {new: true} );
+  console.log(body.password);
+  const data = await User.findOneAndUpdate({_id: body.userID }, {$set: {password: body.password}}, {new: true} );
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(data.password, salt);
   data.password = hashPassword;

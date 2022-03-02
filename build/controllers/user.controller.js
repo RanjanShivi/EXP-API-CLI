@@ -7,7 +7,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.userRegistration = exports.userLogin = exports.updateUser = exports.getAllUsers = exports.deleteUser = void 0;
+exports.userRegistration = exports.userLogin = exports.resetPassword = exports.getAllUsers = exports.forgetPassword = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -65,13 +65,6 @@ var getAllUsers = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
-/**
- * Controller to create a new user
- * @param  {object} req - request object
- * @param {object} res - response object
- * @param {Function} next
- */
-
 
 exports.getAllUsers = getAllUsers;
 
@@ -154,17 +147,10 @@ var userLogin = /*#__PURE__*/function () {
     return _ref3.apply(this, arguments);
   };
 }();
-/**
- * Controller to update a user
- * @param  {object} req - request object
- * @param {object} res - response object
- * @param {Function} next
- */
-
 
 exports.userLogin = userLogin;
 
-var updateUser = /*#__PURE__*/function () {
+var forgetPassword = /*#__PURE__*/function () {
   var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4(req, res, next) {
     var data;
     return _regenerator["default"].wrap(function _callee4$(_context4) {
@@ -173,14 +159,14 @@ var updateUser = /*#__PURE__*/function () {
           case 0:
             _context4.prev = 0;
             _context4.next = 3;
-            return UserService.updateUser(req.params._id, req.body);
+            return UserService.forgetPassword(req.body);
 
           case 3:
             data = _context4.sent;
-            res.status(_httpStatusCodes["default"].ACCEPTED).json({
-              code: _httpStatusCodes["default"].ACCEPTED,
+            res.status(_httpStatusCodes["default"].OK).json({
+              code: _httpStatusCodes["default"].OK,
               data: data,
-              message: 'User updated successfully'
+              message: 'Reset Password Link Sent'
             });
             _context4.next = 10;
             break;
@@ -198,55 +184,51 @@ var updateUser = /*#__PURE__*/function () {
     }, _callee4, null, [[0, 7]]);
   }));
 
-  return function updateUser(_x10, _x11, _x12) {
+  return function forgetPassword(_x10, _x11, _x12) {
     return _ref4.apply(this, arguments);
   };
 }();
-/**
- * Controller to delete a user
- * @param  {object} req - request object
- * @param {object} res - response object
- * @param {Function} next
- */
 
+exports.forgetPassword = forgetPassword;
 
-exports.updateUser = updateUser;
-
-var deleteUser = /*#__PURE__*/function () {
+var resetPassword = /*#__PURE__*/function () {
   var _ref5 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee5(req, res, next) {
+    var data;
     return _regenerator["default"].wrap(function _callee5$(_context5) {
       while (1) {
         switch (_context5.prev = _context5.next) {
           case 0:
             _context5.prev = 0;
-            _context5.next = 3;
-            return UserService.deleteUser(req.params._id);
+            req.body.userID = req.body.data.id;
+            _context5.next = 4;
+            return UserService.resetPassword(req.body);
 
-          case 3:
+          case 4:
+            data = _context5.sent;
             res.status(_httpStatusCodes["default"].OK).json({
               code: _httpStatusCodes["default"].OK,
-              data: [],
-              message: 'User deleted successfully'
+              data: data,
+              message: 'Password Reset Successful'
             });
-            _context5.next = 9;
+            _context5.next = 11;
             break;
 
-          case 6:
-            _context5.prev = 6;
+          case 8:
+            _context5.prev = 8;
             _context5.t0 = _context5["catch"](0);
             next(_context5.t0);
 
-          case 9:
+          case 11:
           case "end":
             return _context5.stop();
         }
       }
-    }, _callee5, null, [[0, 6]]);
+    }, _callee5, null, [[0, 8]]);
   }));
 
-  return function deleteUser(_x13, _x14, _x15) {
+  return function resetPassword(_x13, _x14, _x15) {
     return _ref5.apply(this, arguments);
   };
 }();
 
-exports.deleteUser = deleteUser;
+exports.resetPassword = resetPassword;
