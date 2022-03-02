@@ -38,6 +38,7 @@ export const userLogin = async (body) => {
 };
 
 export const forgetPassword = async (body) => {
+  console.log(body);
   const data = await User.findOne({ email: body.email})
   console.log(data);
   if (data == null) {
@@ -45,8 +46,8 @@ export const forgetPassword = async (body) => {
   }else {
     let token = jwt.sign({"email": data.email, "id": data._id}, process.env.SECRET_KEY2);
     const sendMail = Helpers.sendMailTo(data.email, token);
+    console.log(sendMail);
     return sendMail;
   }
 };
-
 
