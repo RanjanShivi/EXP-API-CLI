@@ -2,6 +2,7 @@ import express from 'express';
 import * as userController from '../controllers/user.controller';
 import { newUserValidator } from '../validators/validator';
 import { userAuth } from '../middlewares/auth.middleware';
+import { userRegistration } from '../services/user.service';
 
 const router = express.Router();
 
@@ -14,8 +15,6 @@ router.post('/userregister', newUserValidator, userController.userRegistration);
 //route to login registered users
 router.get('/login', userController.userLogin);
 
-//route to login registered users
 router.get('/forgetpassword', userController.forgetPassword);
-
 
 export default router;
