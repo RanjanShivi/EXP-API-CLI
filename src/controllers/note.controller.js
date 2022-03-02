@@ -75,28 +75,28 @@ export const getNotebyId = async (req, res, next) => {
     }
   };
 
-  export const deleteNote = async (req, res, next) => {
+  export const trashNote = async (req, res, next) => {
     try {
       req.body.userID = req.body.data.id;
-      const data = await NoteService.deleteNote(req.params._id);
+      const data = await NoteService.trashNote(req.params._id);
       res.status(HttpStatus.ACCEPTED).json({
         code: HttpStatus.ACCEPTED,
         data: data,
-        message: 'Note deleted successfully'
+        message: 'Note move to trash successfully'
       });
     } catch (error) {
       next(error);
     }
   };
 
-  const trashNote = async (req, res, next) => {
+  const deleteNote = async (req, res, next) => {
     try {
       req.body.userID = req.body.data.id;
-      await NoteService.trashNote(req.params._id);
+      await NoteService.deleteNote(req.params._id);
       res.status(HttpStatus.OK).json({
         code: HttpStatus.OK,
         data: [],
-        message: 'Note trash successfully'
+        message: 'Note deleted successfully'
       });
     } catch (error) {
       next(error);

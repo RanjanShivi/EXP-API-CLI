@@ -1,29 +1,29 @@
 import express from 'express';
 import * as noteController from '../controllers/note.controller';
 import { newNoteValidator } from '../validators/validator';
-import { userAuth } from '../middlewares/auth.middleware';
+import {userAuthForNote } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 
 // Create a new Note
-router.post('', newNoteValidator, userAuth, noteController.create);
+router.post('', newNoteValidator, userAuthForNote, noteController.create);
 
 // Retrieve all Notes
-router.get('', userAuth, noteController.getAllNotes);
+router.get('', userAuthForNote, noteController.getAllNotes);
 
 // Retrieve a single Note with noteId
-router.get('/:_id', userAuth, noteController.getNotebyId);
+router.get('/:_id', userAuthForNote, noteController.getNotebyId);
 
 // Update a Note with noteId
-router.put('/:_id', userAuth, noteController.updateNote);
+router.put('/:_id', userAuthForNote, noteController.updateNote);
 
 //isArchieve
-router.put('/archive/:_id', userAuth, noteController.updateNote);
+router.put('/archive/:_id', userAuthForNote, noteController.updateNote);
 
-//isdelete
-router.put('/delete/:_id', userAuth, noteController.updateNote);
+//trash
+router.put('/trash/:_id', userAuthForNote, noteController.trashNote);
 
-// Trash a Note with noteId
-router.delete('/:_id', userAuth, noteController.deleteNote);
+// Delete a Note 
+router.delete('/:_id', userAuthForNote, noteController.deleteNote);
 
 export default router;
