@@ -10,9 +10,9 @@ const router = express.Router();
 router.post('/userregister', newUserValidator, userController.userRegistration);
 
 //route to login registered users
-router.get('/login', userController.userLogin);
+router.post('/login', userController.userLogin);
 
-router.get('/forgetpassword', userController.forgetPassword);
+router.post('/forgetpassword', userController.forgetPassword);
 
 router.put('/resetpassword', userAuthForPassword, userController.resetPassword);
 

@@ -6,7 +6,7 @@ import {userAuthForNote } from '../middlewares/auth.middleware';
 const router = express.Router();
 
 // Create a new Note
-router.post('', newNoteValidator, userAuthForNote, noteController.create);
+router.post('', newNoteValidator, userAuthForNote ,noteController.create);
 
 // Retrieve all Notes
 router.get('', userAuthForNote, noteController.getAllNotes);
@@ -18,7 +18,7 @@ router.get('/:_id', userAuthForNote, noteController.getNotebyId);
 router.put('/:_id', userAuthForNote, noteController.updateNote);
 
 //isArchieve
-router.put('/archive/:_id', userAuthForNote, noteController.updateNote);
+router.put('/archive/:_id', userAuthForNote, noteController.archieveNote);
 
 //trash
 router.put('/trash/:_id', userAuthForNote, noteController.trashNote);

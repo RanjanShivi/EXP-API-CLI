@@ -21,8 +21,8 @@ export const getNotebyId = async (noteID, userID) => {
   };
   
 //update notes
-export const updateNote = async (noteID, body) => {
-  const data = await Note.findByIdAndUpdate({_id:noteID, userID: body.userID}, body, {new: true});
+export const updateNote = async (_id, body) => {
+  const data = await Note.findByIdAndUpdate({_id}, body, {new: true});
   return data;
 };
 
