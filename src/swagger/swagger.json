@@ -352,7 +352,7 @@
                         "description": "registered email id",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ForgetPassword"
+                            "$ref": "#/definitions/forgetPassword"
                         }
                     }
                 ],
@@ -384,7 +384,7 @@
                         "description": "New Password",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/ResetPassword"
+                            "$ref": "#/definitions/resetPassword"
                         }
                     }
                 ],
@@ -440,7 +440,7 @@
                 }
             }
         },
-        "ForgetPassword": {
+        "forgetPassword": {
             "type": "object",
             "properties": {
                 "email": {
@@ -448,7 +448,7 @@
                 }             
             }
         },
-        "ResetPassword": {
+        "resetPassword": {
             "type": "object",
             "properties": {
                 "passoword": {
