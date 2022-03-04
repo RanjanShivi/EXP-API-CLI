@@ -9,12 +9,15 @@ export const createNote = async (body) => {
 //get all notes
 export const getAllNotes = async (userID) => {
     const data = await Note.find({userID});
-    return data;
+    if(data.length === 0){
+      throw new Error('No Note Found');
+    } else{
+      return data;
+    }
   };
 
 //get single notes
 export const getNotebyId = async (noteID, userID) => {
-
     const data = await Note.findById({_id: noteID, userID: userID});
     console.log(data);
     return data;
@@ -22,7 +25,9 @@ export const getNotebyId = async (noteID, userID) => {
   
 //update notes
 export const updateNote = async (_id, body) => {
-  const data = await Note.findByIdAndUpdate({_id}, body, {new: true});
+  const data = await Note.findByIdAndUpdate({_id},
+    {Tittle: body.Tittle, Description: body.Description, Color: body.Color},
+    {new: true});
   return data;
 };
 
