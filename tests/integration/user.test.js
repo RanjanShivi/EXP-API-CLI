@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import request from 'supertest';
 import mongoose from 'mongoose';
+import HttpStatus from 'http-status-codes';
 
 import app from '../../src/index';
 
@@ -26,16 +27,82 @@ describe('User APIs Test', () => {
     done();
   });
 
-  describe('GET /users', () => {
-    it('should return empty array', (done) => {
-      request(app)
-        .get('/api/v1/users')
-        .end((err, res) => {
-          expect(res.statusCode).to.be.equal(200);
-          expect(res.body.data).to.be.an('array');
+  describe('POST /userregister', () => {
 
+    it('given new user when added should return status 201', (done) => {
+      const userdetails = {
+        firstName: "Shivangi",
+        lastName: "Ranjan",
+        email: "shivangi@gmail.com",
+        password: "shivangi"
+      };
+      request(app)
+        .post('/api/v1/users/userregister')
+        .send(userdetails)
+        .end((err, res) => {
+          expect(res.statusCode).to.be.equal(HttpStatus.CREATED);
           done();
         });
+
     });
+})
+
+describe('POST /login', () => {
+
+  it('login registered user when added should return status 200', (done) => {
+    const userdetails = {      
+      email: "shivangi@gmail.com",
+      password: "shivangi"
+    };
+    request(app)
+      .post('/api/v1/users/login')
+      .send(userdetails)
+      .end((err, res) => {
+        expect(res.statusCode).to.be.equal(HttpStatus.OK);
+        done();
+      });
+
   });
+})
+
+describe('POST /forgetpassword', () => {
+
+  it('Take email of registered user when added should return status 200', (done) => {
+    const userdetails = {      
+      email: "shivangi@gmail.com"
+    };
+    request(app)
+      .post('/api/v1/users/forgetpassword')
+      .send(userdetails)
+      .end((err, res) => {
+        expect(res.statusCode).to.be.equal(HttpStatus.OK);
+        done();
+      });
+
+  });
+})
+
+
+describe('PUT /resetpassword', () => {
+
+  it('Take new password of registered user when added should return status 200', (done) => {
+    const userdetails = {      
+      password: "shivanginewyy"
+    };
+
+    const newJwtoken = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaXZhbmdpQGdtYWlsLmNvbSIsImlkIjoiNjIyMjA2ODRkYTY2YWEyYjY4MGM3YjkyIiwiaWF0IjoxNjQ2Mzk3MDYwfQ.yxLc3ltDtP4jVw8-aN8jozeed1t2rhMSUO1kxWdZJ40";
+    
+    request(app)
+      .put('/api/v1/users/resetpassword')
+      .set('Authorization',`${newJwtoken}`)
+      .send(userdetails)
+      .end((err, res) => {
+        expect(res.statusCode).to.be.equal(HttpStatus.OK);
+        done();
+      });
+
+  });
+})
+
 });
+
