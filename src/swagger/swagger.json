@@ -230,7 +230,43 @@
                             "JWT": []
                         }
                     ]
+                },
+                
+                    "delete":{
+                    "tags": [
+                        "Notes"
+                    ],
+                    "description": "Delete Note",
+                    "parameters": [
+                        {
+                            "name": "_id",
+                            "in": "path",
+                            "description": " Note ID",
+                            "required": true
+                        }
+                    ],
+                    "produces": [
+                        "application/json"
+                    ],
+                    "consumes": [
+                        "application/json"
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Note deleted Successfully"
+                        },
+                        "500": {
+                            "description": "Internal Server Error"
+                        }
+                    },
+                    "security": [
+                        {
+                            "JWT": []
+                        }
+                    ]
                 }
+            
+
         },
 
             "/note/archive/{_id}": {
@@ -302,41 +338,7 @@
                         ]
                     }
                 },
-                "/note/delete/{_id}": {
-                    "delete":{
-                    "tags": [
-                        "Notes"
-                    ],
-                    "description": "Delete Note",
-                    "parameters": [
-                        {
-                            "name": "_id",
-                            "in": "path",
-                            "description": " Note ID",
-                            "required": true
-                        }
-                    ],
-                    "produces": [
-                        "application/json"
-                    ],
-                    "consumes": [
-                        "application/json"
-                    ],
-                    "responses": {
-                        "200": {
-                            "description": "Note deleted Successfully"
-                        },
-                        "500": {
-                            "description": "Internal Server Error"
-                        }
-                    },
-                    "security": [
-                        {
-                            "JWT": []
-                        }
-                    ]
-                }
-            },
+                
         
         "/users/forgetpassword": {
             "post": {
