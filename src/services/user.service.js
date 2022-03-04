@@ -16,6 +16,7 @@ export const userRegistration = async (body) => {
     const data = await User.create(body);
     return data;
   }else {
+    
     throw new Error ("User Already Exists") ;
   }
   };
@@ -38,22 +39,20 @@ export const userLogin = async (body) => {
 };
 
 export const forgetPassword = async (body) => {
-  console.log(body);
+  //console.log(body);
   const data = await User.findOne({ email: body.email})
-  console.log(data);
+  //console.log(data);
   if (data == null) {
     throw new Error("email is not registered")
   }else {
     let token = jwt.sign({"email": data.email, "id": data._id}, process.env.SECRET_KEY2);
-    const sendMail = Helpers.sendMailTo(data.email, token);
-    console.log(sendMail);
+    const sendMail = await Helpers.sendMailTo(data.email, token);
     return sendMail;
   }
 };
 
 export const resetPassword = async (body) => {
-  console.log(body);
-  console.log(body.password);
+  //console.log(body.password);
   const salt = await bcrypt.genSalt(10);
   const newPassword = await bcrypt.hash(body.password, salt);
   const data = await User.findByIdAndUpdate({_id: body.userID }, {$set: {password: newPassword}}, {new: true} );
