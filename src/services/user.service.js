@@ -1,6 +1,7 @@
 import User from '../models/user.model';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
+import { sender } from '../utils/rabbitmq';
 
 
 import * as Utils from '../utils/user.util';
@@ -14,9 +15,9 @@ export const userRegistration = async (body) => {
     const salt = await bcrypt.genSalt(10);
     body.password = await bcrypt.hash(body.password, salt);
     const data = await User.create(body);
+    sender(data);
     return data;
-  }else {
-    
+  }else {    
     throw new Error ("User Already Exists") ;
   }
   };
@@ -25,7 +26,7 @@ export const userRegistration = async (body) => {
 export const userLogin = async (body) => {
   const searchData = await User.findOne({ email: body.email})
   if (searchData == null) {
-    throw new Error("User does not exist");
+    return null;
   }else {
     const validPassword = await bcrypt.compare(body.password, searchData.password);
     if (validPassword) {

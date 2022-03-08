@@ -1,17 +1,22 @@
 import Note from '../models/note.model';
+import { client } from '../config/redis';
 
 //create new note
 export const createNote = async (body) => {
   const data = await Note.create(body);
+  if(data){
+    await client.del('allNotes');
+  }
   return data;
-    };
+ };
 
 //get all notes
 export const getAllNotes = async (userID) => {
     const data = await Note.find({userID});
     if(data.length === 0){
-      throw new Error('No Note Found');
+      return null;
     } else{
+      await client.set('allNotes' , JSON.stringify(data));
       return data;
     }
   };
@@ -19,8 +24,12 @@ export const getAllNotes = async (userID) => {
 //get single notes
 export const getNotebyId = async (noteID, userID) => {
     const data = await Note.findById({_id: noteID, userID: userID});
-    console.log(data);
+    if(data){
     return data;
+    }
+    else{
+      throw new Error ("Note not found with this id");
+    }
   };
   
 //update notes

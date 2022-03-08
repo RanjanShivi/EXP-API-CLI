@@ -26,8 +26,12 @@ export const getAllNotes = async (req, res, next) => {
         data: data,
         message: 'All notes fetched successfully'
     });
-    }catch (error) {
-        next(error);
+    }catch (error) {      
+        res.status(HttpStatus.NO_CONTENT).json({
+        code: HttpStatus.NO_CONTENT,
+        message: `${error}`
+    });
+        next();
     }
   };
 
@@ -42,7 +46,11 @@ export const getNotebyId = async (req, res, next) => {
       message: 'Note fetched successfully'
       });
     } catch (error) {
-        next(error);
+      res.status(HttpStatus.NOT_FOUND).json({
+        code: HttpStatus.NOT_FOUND,
+        message: `${error}`
+      });
+        next();
     }
   };
 
