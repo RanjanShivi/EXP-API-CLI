@@ -43,8 +43,23 @@ describe('User APIs Test', () => {
           expect(res.statusCode).to.be.equal(HttpStatus.CREATED);
           done();
         });
+      });
 
-    });
+      it('give message user already exist and should return status 409', (done) => {
+        const userdetails = {
+          firstName: "Shivangi",
+          lastName: "Ranjan",
+          email: "shivangi@gmail.com",
+          password: "shivangi"
+        };
+        request(app)
+          .post('/api/v1/users/userregister')
+          .send(userdetails)
+          .end((err, res) => {
+            expect(res.statusCode).to.be.equal(HttpStatus.CONFLICT);
+            done();
+          });
+        });
 })
 
 describe('POST /login', () => {
@@ -59,6 +74,36 @@ describe('POST /login', () => {
       .send(userdetails)
       .end((err, res) => {
         expect(res.statusCode).to.be.equal(HttpStatus.OK);
+        done();
+      });
+
+  });
+
+  it('give message usser doess not exist and return status 404', (done) => {
+    const userdetails = {      
+      email: "shiva@gmail.com",
+      password: "shivangi"
+    };
+    request(app)
+      .post('/api/v1/users/login')
+      .send(userdetails)
+      .end((err, res) => {
+        expect(res.statusCode).to.be.equal(HttpStatus.NOT_FOUND);
+        done();
+      });
+
+  });
+
+  it('give message invalid password and return status 400', (done) => {
+    const userdetails = {      
+      email: "shivangi@gmail.com",
+      password: "shiva"
+    };
+    request(app)
+      .post('/api/v1/users/login')
+      .send(userdetails)
+      .end((err, res) => {
+        expect(res.statusCode).to.be.equal(HttpStatus.BAD_REQUEST);
         done();
       });
 
@@ -80,6 +125,20 @@ describe('POST /forgetpassword', () => {
       });
 
   });
+
+  it('give message email not registered and  should return status 404', (done) => {
+    const userdetails = {      
+      email: "shiva@gmail.com"
+    };
+    request(app)
+      .post('/api/v1/users/forgetpassword')
+      .send(userdetails)
+      .end((err, res) => {
+        expect(res.statusCode).to.be.equal(HttpStatus.NOT_FOUND);
+        done();
+      });
+
+  });
 })
 
 
@@ -97,7 +156,7 @@ describe('PUT /resetpassword', () => {
       .set('Authorization',`${newJwtoken}`)
       .send(userdetails)
       .end((err, res) => {
-        expect(res.statusCode).to.be.equal(HttpStatus.OK);
+        expect(res.statusCode).to.be.equal(HttpStatus.RESET_CONTENT);
         done();
       });
 
