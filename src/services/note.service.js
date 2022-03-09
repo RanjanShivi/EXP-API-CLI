@@ -33,6 +33,7 @@ export const getNotebyId = async (noteID, userID) => {
   };
   
 //update notes
+
 export const updateNote = async (_id, body) => {
   const data = await Note.findByIdAndUpdate({_id},
     {Tittle: body.Tittle, Description: body.Description, Color: body.Color},
