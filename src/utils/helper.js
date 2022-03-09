@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { defaultMaxListeners } from "winston-daily-rotate-file";
 import logger, {logStream} from '../config/logger'
 
 
@@ -30,6 +31,41 @@ export const sendMailTo = (recieverID, token) => {
             else{
                 logger.log('info', info);
                 return resolve('Reset password link send successfully');
+            }
+        })
+
+    });
+    
+}
+
+export const sendRabbitMailTo = (emailID) => {
+    
+    const transport = nodemailer.createTransport({
+        service : "gmail",
+        auth: {
+            user : process.env.SENDER_ID,
+            pass : process.env.PASSWORD
+        }
+
+    })
+
+    const mailInfo = {
+        from : process.env.SENDER_ID,
+        to: emailID,
+        subject : "Rabbit Mail",
+        html : `<h1>Successfully registered</h1>`
+
+    }
+    return new Promise((resolve,reject)=>{
+        transport.sendMail(mailInfo,(err,info)=> {
+            if(err){
+                logger.log('error', err);
+                //throw new Error("Something went wrong while sending reset password link....")
+                return reject('Something went wrong while sending mail....');
+            }
+            else{
+                logger.log('info', info);
+                return resolve('User Registerd Successfully');
             }
         })
 

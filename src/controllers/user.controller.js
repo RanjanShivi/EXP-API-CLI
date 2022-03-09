@@ -24,7 +24,7 @@ export const userLogin = async (req, res, next) => {
     if(data === null){
       res.status(HttpStatus.NOT_FOUND).json({
         code: HttpStatus.NOT_FOUND,
-        message: 'User Does not Exit'
+        message: 'User Does not Exit with this email'
       });
     }else{
     res.status(HttpStatus.OK).json({
