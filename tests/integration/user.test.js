@@ -60,6 +60,54 @@ describe('User APIs Test', () => {
             done();
           });
         });
+
+        it('give message for incorrect firstname and should return status 400', (done) => {
+          const userdetails = {
+            firstName: "S",
+            lastName: "Ranjan",
+            email: "shivangi@gmail.com",
+            password: "shivangi"
+          };
+          request(app)
+            .post('/api/v1/users/userregister')
+            .send(userdetails)
+            .end((err, res) => {
+              expect(res.statusCode).to.be.equal(HttpStatus.BAD_REQUEST);
+              done();
+            });
+          });
+
+          it('give message for incorrect lastname and should return status 400', (done) => {
+            const userdetails = {
+              firstName: "SHivangi",
+              lastName: "R",
+              email: "shivangi@gmail.com",
+              password: "shivangi"
+            };
+            request(app)
+              .post('/api/v1/users/userregister')
+              .send(userdetails)
+              .end((err, res) => {
+                expect(res.statusCode).to.be.equal(HttpStatus.BAD_REQUEST);
+                done();
+              });
+            });
+
+            it('give message for incorrect email and should return status 400', (done) => {
+              const userdetails = {
+                firstName: "SHivangi",
+                lastName: "Ranjan",
+                email: "s@.co",
+                password: "shivangi"
+              };
+              request(app)
+                .post('/api/v1/users/userregister')
+                .send(userdetails)
+                .end((err, res) => {
+                  expect(res.statusCode).to.be.equal(HttpStatus.BAD_REQUEST);
+                  done();
+                });
+              });
 })
 
 describe('POST /login', () => {
