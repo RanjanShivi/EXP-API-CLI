@@ -39,6 +39,7 @@ export const getAllNotes = async (req, res, next) => {
 export const getNotebyId = async (req, res, next) => {
     try {
       req.body.userID = req.body.data.id;
+      console.log("------------>", req.params._id);
       const data = await NoteService.getNotebyId(req.params._id, req.body.userID);
       res.status(HttpStatus.ACCEPTED).json({
       code: HttpStatus.ACCEPTED,
@@ -101,7 +102,7 @@ export const getNotebyId = async (req, res, next) => {
     try {
       req.body.userID = req.body.data.id;
       await NoteService.deleteNote(req.params._id);
-      res.status(HttpStatus.OK).json({
+      res.status(HttpStatus.Ok).json({
         code: HttpStatus.OK,
         data: [],
         message: 'Note deleted successfully'

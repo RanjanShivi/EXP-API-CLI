@@ -5,6 +5,9 @@ import HttpStatus from 'http-status-codes';
 
 import app from '../../src/index';
 
+let authToken;
+let noteID;
+
 describe('User APIs Test', () => {
   before((done) => {
     const clearCollections = () => {
@@ -28,7 +31,6 @@ describe('User APIs Test', () => {
   });
 
   describe('POST /userregister', () => {
-
     it('given new user when added should return status 201', (done) => {
       const userdetails = {
         firstName: "Shivangi",
@@ -45,69 +47,69 @@ describe('User APIs Test', () => {
         });
       });
 
-      it('give message user already exist and should return status 409', (done) => {
+    it('give message user already exist and should return status 409', (done) => {
+      const userdetails = {
+        firstName: "Shivangi",
+        lastName: "Ranjan",
+        email: "shivangi@gmail.com",
+        password: "shivangi"
+      };
+      request(app)
+        .post('/api/v1/users/userregister')
+        .send(userdetails)
+        .end((err, res) => {
+        expect(res.statusCode).to.be.equal(HttpStatus.CONFLICT);
+        done();
+      });
+    });
+
+    it('give message for incorrect firstname and should return status 400', (done) => {
+      const userdetails = {
+        firstName: "S",
+        lastName: "Ranjan",
+        email: "shivangi@gmail.com",
+        password: "shivangi"
+        };
+        request(app)
+        .post('/api/v1/users/userregister')
+        .send(userdetails)
+        .end((err, res) => {
+          expect(res.statusCode).to.be.equal(HttpStatus.BAD_REQUEST);
+          done();
+          });
+      });
+
+      it('give message for incorrect lastname and should return status 400', (done) => {
         const userdetails = {
-          firstName: "Shivangi",
-          lastName: "Ranjan",
+          firstName: "SHivangi",
+          lastName: "R",
           email: "shivangi@gmail.com",
           password: "shivangi"
         };
         request(app)
-          .post('/api/v1/users/userregister')
-          .send(userdetails)
-          .end((err, res) => {
-            expect(res.statusCode).to.be.equal(HttpStatus.CONFLICT);
+        .post('/api/v1/users/userregister')
+        .send(userdetails)
+        .end((err, res) => {
+          expect(res.statusCode).to.be.equal(HttpStatus.BAD_REQUEST);
+          done();
+        });
+      });
+      
+      it('give message for incorrect email and should return status 400', (done) => {
+        const userdetails = {
+          firstName: "SHivangi",
+          lastName: "Ranjan",
+          email: "s@.co",
+          password: "shivangi"
+        };
+        request(app)
+        .post('/api/v1/users/userregister')
+        .send(userdetails)
+        .end((err, res) => {
+            expect(res.statusCode).to.be.equal(HttpStatus.BAD_REQUEST);
             done();
           });
         });
-
-        it('give message for incorrect firstname and should return status 400', (done) => {
-          const userdetails = {
-            firstName: "S",
-            lastName: "Ranjan",
-            email: "shivangi@gmail.com",
-            password: "shivangi"
-          };
-          request(app)
-            .post('/api/v1/users/userregister')
-            .send(userdetails)
-            .end((err, res) => {
-              expect(res.statusCode).to.be.equal(HttpStatus.BAD_REQUEST);
-              done();
-            });
-          });
-
-          it('give message for incorrect lastname and should return status 400', (done) => {
-            const userdetails = {
-              firstName: "SHivangi",
-              lastName: "R",
-              email: "shivangi@gmail.com",
-              password: "shivangi"
-            };
-            request(app)
-              .post('/api/v1/users/userregister')
-              .send(userdetails)
-              .end((err, res) => {
-                expect(res.statusCode).to.be.equal(HttpStatus.BAD_REQUEST);
-                done();
-              });
-            });
-
-            it('give message for incorrect email and should return status 400', (done) => {
-              const userdetails = {
-                firstName: "SHivangi",
-                lastName: "Ranjan",
-                email: "s@.co",
-                password: "shivangi"
-              };
-              request(app)
-                .post('/api/v1/users/userregister')
-                .send(userdetails)
-                .end((err, res) => {
-                  expect(res.statusCode).to.be.equal(HttpStatus.BAD_REQUEST);
-                  done();
-                });
-              });
 })
 
 describe('POST /login', () => {
@@ -121,6 +123,7 @@ describe('POST /login', () => {
       .post('/api/v1/users/login')
       .send(userdetails)
       .end((err, res) => {
+        authToken = res.body.data;
         expect(res.statusCode).to.be.equal(HttpStatus.OK);
         done();
       });
@@ -209,7 +212,118 @@ describe('PUT /resetpassword', () => {
       });
 
   });
+  
 })
 
-});
+describe('POST /Create New Note', () => {
+  it('given new note when added should return status 201', (done) => {
+    const notedetails = {
+      Title: "Note-1",
+      Description: "Test Note-1",
+      Color: "Blue",
+  };
+    request(app)
+      .post('/api/v1/note')
+      .set('Authorization', `Bearer ${authToken}`)
+      .send(notedetails)
+      .end((err, res) => {
+          noteID = res.body.data._id;
+          console.log("res.body.data------", res.body.data);
 
+          console.log("This is user Auth Token", authToken);
+          expect(res.statusCode).to.be.equal(HttpStatus.CREATED);
+          done();
+      });
+    });
+  })
+
+  describe('GET /Get All Notes', () => {
+    it('given all note when retrieve should return status 200', (done) => {
+    
+      request(app)
+        .get('/api/v1/note')
+        .set('Authorization', `Bearer ${authToken}`)
+        
+        .end((err, res) => {
+            console.log("This is user Auth Token", authToken);
+            expect(res.statusCode).to.be.equal(HttpStatus.OK);
+            done();
+        });
+      });
+    })
+
+    describe('GET /Get Single Notes', () => {
+      it('given single note when retrieve should return status 202', (done) => {
+              
+        request(app)
+          .get(`/api/v1/note/${noteID}`)
+          .set('Authorization', `Bearer ${authToken}`)
+          
+          .end((err, res) => {
+              expect(res.statusCode).to.be.equal(HttpStatus.ACCEPTED);
+              done();
+          });
+        });
+      })
+
+      describe('PUT /Update Notes', () => {
+        it('give updated note when updated should return status 202', (done) => {
+          const notedetails = {
+            Title: "Note-1",
+            Description: "Test Note-1",
+            Color: "Red",
+        };
+                
+          request(app)
+            .put(`/api/v1/note/${noteID}`)
+            .set('Authorization', `Bearer ${authToken}`)
+            .send(notedetails)
+            .end((err, res) => {
+                expect(res.statusCode).to.be.equal(HttpStatus.ACCEPTED);
+                done();
+            });
+          });
+        })
+
+        describe('PUT /Archive Notes', () => {
+          it('give archived note when arcchived should return status 202', (done) => {
+                
+            request(app)
+              .put(`/api/v1/note/archive/${noteID}`)
+              .set('Authorization', `Bearer ${authToken}`)
+              
+              .end((err, res) => {
+                  expect(res.statusCode).to.be.equal(HttpStatus.ACCEPTED);
+                  done();
+              });
+            });
+          })
+          describe('PUT /Trash Notes', () => {
+            it('sent note to trash when trashed should return status 202', (done) => {
+                  
+              request(app)
+                .put(`/api/v1/note/trash/${noteID}`)
+                .set('Authorization', `Bearer ${authToken}`)
+                
+                .end((err, res) => {
+                    expect(res.statusCode).to.be.equal(HttpStatus.ACCEPTED);
+                    done();
+                });
+              });
+            })
+
+            describe('DELETE /Delete Notes', () => {
+              it('delete note when deleted should return status 200', (done) => {
+                    
+                request(app)
+                  .delete(`/api/v1/note/${noteID}`)
+                  .set('Authorization', `Bearer ${authToken}`)
+                  
+                  .end((err, res) => {
+                      expect(res.statusCode).to.be.equal(HttpStatus.OK);
+                      done();
+                  });
+                });
+              })
+
+});
